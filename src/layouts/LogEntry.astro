@@ -1,0 +1,45 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+	frontmatter: {
+		title: string;
+		description: string;
+		date: string;
+	};
+}
+
+const { frontmatter } = Astro.props;
+
+const dateLabel = new Date(`${frontmatter.date}T00:00:00Z`).toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+	timeZone: 'UTC',
+});
+---
+
+<Base title={frontmatter.title} description={frontmatter.description}>
+	<article>
+		<h1>{frontmatter.title}</h1>
+		<p class="meta">
+			<time datetime={frontmatter.date}>{dateLabel}</time>
+		</p>
+		<slot />
+	</article>
+
+	<p class="back"><a href="/log">Back to the log</a></p>
+</Base>
+
+<style>
+	.meta {
+		margin: 0 0 2rem;
+		color: var(--ink-soft);
+	}
+
+	.back {
+		margin-top: 3rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--rule);
+	}
+</style>

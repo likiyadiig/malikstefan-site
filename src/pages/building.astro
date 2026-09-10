@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro';
+
+// TODO: set the date you will decide by. Delete the whole block if you drop the deadline.
+const DECISION_DATE = new Date('2026-12-31T00:00:00Z');
+
+const decisionLabel = DECISION_DATE.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+	timeZone: 'UTC',
+});
+
+// TODO: replace with the real ideas. `leaning` marks the one you are currently favouring.
+const ideas = [
+	{ name: 'TODO: idea one', leaning: true },
+	{ name: 'TODO: idea two', leaning: false },
+	{ name: 'TODO: idea three', leaning: false },
+];
+---
+
+<Base
+	title="TODO: building page title"
+	description="TODO: building page meta description, one sentence, under 160 characters."
+>
+	<h1>What I am Building</h1>
+
+	<p class="lede">
+		<!-- TODO: one or two sentences on where this decision stands right now. -->
+		TODO: opening line for the building page.
+	</p>
+
+	<section aria-labelledby="ideas-heading">
+		<h2 id="ideas-heading">Current ideas</h2>
+
+		{
+			ideas.map((idea) => (
+				<article class="idea">
+					<h3>
+						{idea.name}
+						{idea.leaning && <span class="tag">leaning</span>}
+					</h3>
+					<p>
+						{/* TODO: what the idea is, in a sentence. */}
+						TODO: what it is.
+					</p>
+					<p>
+						{/* TODO: what would have to be true for this to be the one. */}
+						TODO: what would make this the answer.
+					</p>
+				</article>
+			))
+		}
+	</section>
+
+	<section aria-labelledby="leaning-heading">
+		<h2 id="leaning-heading">Which way I am leaning</h2>
+		<p>
+			<!-- TODO: name the idea you are leaning toward and say why, plainly. -->
+			TODO: the lean, and the reason for it.
+		</p>
+	</section>
+
+	<section aria-labelledby="decision-heading">
+		<h2 id="decision-heading">Decision date</h2>
+		<p>
+			I decide by <time datetime={DECISION_DATE.toISOString().slice(0, 10)}>{decisionLabel}</time>.
+		</p>
+		<p>
+			<!-- TODO: what happens on that date, or delete this paragraph. -->
+			TODO: what committing looks like.
+		</p>
+	</section>
+</Base>
+
+<style>
+	.lede {
+		font-size: 1.25rem;
+		line-height: 1.45;
+		margin: 0 0 2rem;
+	}
+
+	.idea {
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.idea h3 {
+		margin-top: 0;
+	}
+
+	.idea p:last-child {
+		margin-bottom: 0;
+	}
+
+	.tag {
+		margin-left: 0.5rem;
+		padding: 0.1rem 0.45rem;
+		border: 1px solid var(--rule);
+		border-radius: 999px;
+		color: var(--ink-soft);
+		font-size: 0.8rem;
+		font-weight: 400;
+		vertical-align: middle;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+</style>

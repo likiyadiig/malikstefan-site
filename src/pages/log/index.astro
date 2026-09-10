@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+
+interface EntryFrontmatter {
+	title: string;
+	description: string;
+	date: string;
+}
+
+const modules = import.meta.glob<{ frontmatter: EntryFrontmatter; url?: string }>(
+	'./*.md',
+	{ eager: true }
+);
+
+const entries = Object.values(modules)
+	.filter((entry) => entry.url)
+	.sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
+
+const formatDate = (date: string) =>
+	new Date(`${date}T00:00:00Z`).toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		timeZone: 'UTC',
+	});
+---
+
+<Base
+	title="TODO: log index title"
+	description="TODO: log index meta description, one sentence, under 160 characters."
+>
+	<h1>Log</h1>
+
+	<p class="lede">
+		<!-- TODO: one or two sentences on what goes in the log and how often. -->
+		TODO: what this log is.
+	</p>
+
+	{
+		entries.length === 0 ? (
+			<p>TODO: no entries yet. Add a markdown file to <code>src/pages/log/</code>.</p>
+		) : (
+			<ol class="entries" reversed>
+				{entries.map((entry) => (
+					<li>
+						<article>
+							<h2><a href={entry.url}>{entry.frontmatter.title}</a></h2>
+							<p class="meta">
+								<time datetime={entry.frontmatter.date}>
+									{formatDate(entry.frontmatter.date)}
+								</time>
+							</p>
+							<p>{entry.frontmatter.description}</p>
+						</article>
+					</li>
+				))}
+			</ol>
+		)
+	}
+</Base>
+
+<style>
+	.lede {
+		font-size: 1.25rem;
+		line-height: 1.45;
+		margin: 0 0 2rem;
+	}
+
+	.entries {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.entries > li {
+		padding: 1.5rem 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	.entries h2 {
+		margin: 0;
+		font-size: 1.25rem;
+	}
+
+	.entries h2 a {
+		text-decoration: none;
+	}
+
+	.entries h2 a:hover,
+	.entries h2 a:focus-visible {
+		text-decoration: underline;
+	}
+
+	.meta {
+		margin: 0.25rem 0 0.75rem;
+		color: var(--ink-soft);
+		font-size: 1rem;
+	}
+
+	.entries p:last-child {
+		margin-bottom: 0;
+	}
+</style>

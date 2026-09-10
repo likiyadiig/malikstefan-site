@@ -1,17 +1,117 @@
 ---
+import Base from '../layouts/Base.astro';
 
+// TODO: set the real date you started. Everything below counts from here.
+const START_DATE = new Date('2026-01-01T00:00:00Z');
+
+const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
+const week = Math.max(1, Math.floor((Date.now() - START_DATE.getTime()) / MS_PER_WEEK) + 1);
+
+const startedLabel = START_DATE.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+	timeZone: 'UTC',
+});
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+	title="TODO: home page title"
+	description="TODO: home page meta description, one sentence, under 160 characters."
+>
+	<h1>TODO: your name or the one-line title of this site</h1>
+
+	<p class="lede">
+		<!-- TODO: one sentence. What you are doing and why. Nothing else goes here. -->
+		TODO: one sentence on what I am doing and why.
+	</p>
+
+	<section aria-labelledby="week-heading">
+		<h2 id="week-heading">Where I am</h2>
+		<p>
+			Week <strong>{week}</strong>, counting from <time datetime={START_DATE.toISOString().slice(0, 10)}>{startedLabel}</time>.
+		</p>
+		<p>
+			<!-- TODO: one line of context for the counter, or delete this paragraph. -->
+			TODO: what the counter is counting.
+		</p>
+	</section>
+
+	<section aria-labelledby="elsewhere-heading">
+		<h2 id="elsewhere-heading">Elsewhere on this site</h2>
+		<ul>
+			<li><a href="/about">About</a> — TODO: one line on what this page is for.</li>
+			<li><a href="/building">What I am Building</a> — TODO: one line.</li>
+			<li><a href="/log">Log</a> — TODO: one line.</li>
+		</ul>
+	</section>
+
+	<section aria-labelledby="email-heading">
+		<h2 id="email-heading">TODO: heading for the email field</h2>
+		<p>
+			<!-- TODO: one sentence. What someone gets by giving you their address, and how often. -->
+			TODO: what you send and how often.
+		</p>
+
+		<!--
+			TODO: set `action` to your form or newsletter endpoint.
+			Left as-is this form submits to the current page and does nothing.
+			No client-side JavaScript here on purpose.
+		-->
+		<form class="signup" action="TODO-form-endpoint" method="post">
+			<label for="email">Email address</label>
+			<input
+				id="email"
+				name="email"
+				type="email"
+				autocomplete="email"
+				inputmode="email"
+				placeholder="you@example.com"
+				required
+			/>
+			<button type="submit">TODO: button label</button>
+		</form>
+	</section>
+</Base>
+
+<style>
+	.lede {
+		font-size: 1.25rem;
+		line-height: 1.45;
+		margin: 0 0 2rem;
+	}
+
+	.signup {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 0.75rem;
+		margin-top: 1rem;
+	}
+
+	.signup label {
+		flex: 1 0 100%;
+		font-size: 1rem;
+	}
+
+	.signup input {
+		flex: 1 1 16rem;
+		min-width: 0;
+		padding: 0.55rem 0.7rem;
+		border: 1px solid var(--rule);
+		border-radius: 3px;
+		background: #fff;
+		color: inherit;
+		font: inherit;
+	}
+
+	.signup button {
+		padding: 0.55rem 1.1rem;
+		border: 1px solid var(--ink);
+		border-radius: 3px;
+		background: var(--ink);
+		color: var(--paper);
+		font: inherit;
+		cursor: pointer;
+	}
+</style>
