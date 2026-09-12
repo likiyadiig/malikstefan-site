@@ -81,7 +81,7 @@ const ideas = [
 	}
 
 	.idea {
-		padding: 1.25rem 0;
+		padding: 1.5rem 0;
 		border-bottom: 1px solid var(--rule);
 	}
 
@@ -94,15 +94,18 @@ const ideas = [
 	}
 
 	.tag {
+		display: inline-block;
 		margin-left: 0.5rem;
-		padding: 0.1rem 0.45rem;
-		border: 1px solid var(--rule);
+		padding: 0 0.55rem;
+		border: 1px solid var(--accent);
 		border-radius: 999px;
-		color: var(--ink-soft);
-		font-size: 0.8rem;
-		font-weight: 400;
+		color: var(--accent);
+		font-family: var(--sans);
+		/* 18px floor applies here too. */
+		font-size: 1rem;
+		font-weight: 500;
+		line-height: 1.5;
 		vertical-align: middle;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
+		white-space: nowrap;
 	}
 </style>
