@@ -1,33 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
 
-// TODO: set the date you will decide by. Delete the whole block if you drop the deadline.
-const DECISION_DATE = new Date('2026-12-31T00:00:00Z');
 
-const decisionLabel = DECISION_DATE.toLocaleDateString('en-US', {
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric',
-	timeZone: 'UTC',
-});
-
-// TODO: replace with the real ideas. `leaning` marks the one you are currently favouring.
 const ideas = [
-	{ name: 'TODO: idea one', leaning: true },
-	{ name: 'TODO: idea two', leaning: false },
-	{ name: 'TODO: idea three', leaning: false },
+	{
+		name: 'Services',
+		leaning: true,
+		what: 'Making websites for small businesses.',
+		test: 'a lot of businesses currently falling behind due to bad websites, with a lot of them not even having one.',
+	},
+	{
+		name: 'Automated content',
+		leaning: false,
+		what: 'Automated social media content creation agent',
+		test: 'Although I still like this idea, it feels like a side hustle rather than a secure business model.',
+	},
+	{
+		name: 'Products',
+		leaning: false,
+		what: 'Selling apps and tools',
+		test: "The market for this seems very good, and I'd gladly get into it. But a product needs an audience to sell to, and I don't have one yet. Services get me paid from the first customer instead.",
+	},
 ];
 ---
 
 <Base
-	title="TODO: building page title"
-	description="TODO: building page meta description, one sentence, under 160 characters."
+	title="What I am building"
+	description="My ideas, what I'm leaning towards and why I didn't choose a different direction"
 >
 	<h1>What I am Building</h1>
 
 	<p class="lede">
-		<!-- TODO: one or two sentences on where this decision stands right now. -->
-		TODO: opening line for the building page.
+		I looked at Services, Content and Products. I'm going with Services, because it's a good market for someone starting their own business, and lets me actively seek out customers.
 	</p>
 
 	<section aria-labelledby="ideas-heading">
@@ -41,36 +45,16 @@ const ideas = [
 						{idea.leaning && <span class="tag">leaning</span>}
 					</h3>
 					<p>
-						{/* TODO: what the idea is, in a sentence. */}
-						TODO: what it is.
+						{idea.what}
 					</p>
 					<p>
-						{/* TODO: what would have to be true for this to be the one. */}
-						TODO: what would make this the answer.
+						{idea.test}
 					</p>
 				</article>
 			))
 		}
 	</section>
 
-	<section aria-labelledby="leaning-heading">
-		<h2 id="leaning-heading">Which way I am leaning</h2>
-		<p>
-			<!-- TODO: name the idea you are leaning toward and say why, plainly. -->
-			TODO: the lean, and the reason for it.
-		</p>
-	</section>
-
-	<section aria-labelledby="decision-heading">
-		<h2 id="decision-heading">Decision date</h2>
-		<p>
-			I decide by <time datetime={DECISION_DATE.toISOString().slice(0, 10)}>{decisionLabel}</time>.
-		</p>
-		<p>
-			<!-- TODO: what happens on that date, or delete this paragraph. -->
-			TODO: what committing looks like.
-		</p>
-	</section>
 </Base>
 
 <style>
