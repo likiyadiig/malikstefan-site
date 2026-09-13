@@ -26,19 +26,18 @@ const formatDate = (date: string) =>
 ---
 
 <Base
-	title="TODO: log index title"
-	description="TODO: log index meta description, one sentence, under 160 characters."
+	title="Log"
+	description="My logs during this 20 week course"
 >
 	<h1>Log</h1>
 
 	<p class="lede">
-		<!-- TODO: one or two sentences on what goes in the log and how often. -->
-		TODO: what this log is.
+		This is where I will be posting my logs so you can follow my progress for these next 20 Weeks.
 	</p>
 
 	{
 		entries.length === 0 ? (
-			<p>TODO: no entries yet. Add a markdown file to <code>src/pages/log/</code>.</p>
+			<p>No entries yet.</p>
 		) : (
 			<ol class="entries" reversed>
 				{entries.map((entry) => (
