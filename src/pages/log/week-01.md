@@ -1,20 +1,22 @@
 ---
 layout: ../../layouts/LogEntry.astro
-title: "TODO: week 01 title"
-description: "TODO: one-sentence summary. Shown on the log index and as the meta description."
-date: "2026-01-04"
+title: "Building the site"
+description: "Setting up the site I'll use to document the next 20 weeks."
+date: "2026-09-08"
 ---
 
-TODO: opening line. What this week was about.
+Setting up the site I'll use to document the next 20 weeks.
 
 ## What I did
 
-TODO: the work. Concrete, past tense.
+I had Claude interview me so it could understand what I was trying to do, then it built a site template from that.
+After I got the template I wrote every word of the copy myself. That was a rule I set up front — AI-written personal copy reads like AI-written personal copy.
 
 ## What broke
 
-TODO: what went wrong. Keep this section even when nothing broke — say that instead.
+The JavaScript kept breaking because I used apostrophes inside single-quoted strings, which closed the string early and made the build fail. 
+It was a simple fix: I changed the single quotes to double quotes.
 
 ## Next
 
-TODO: what week 02 is for.
+I'll be wiring the site up to Cloudflare Pages, then deliberately breaking the build to see what happens when a deploy fails and how to recover from it.
