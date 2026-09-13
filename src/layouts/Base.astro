@@ -57,8 +57,7 @@ const year = new Date().getFullYear();
 				Malik Stefan &middot; {year}
 			</p>
 			<p>
-				<!-- TODO: contact address, or delete this paragraph. -->
-				<a href="mailto:TODO@malikstefan.com">TODO@malikstefan.com</a>
+				<a href="mailto:Kontakt@malikstefan.com">Kontakt@malikstefan.com</a>
 			</p>
 		</footer>
 	</body>
@@ -66,12 +65,11 @@ const year = new Date().getFullYear();
 
 <style is:global>
 	:root {
-		/* Contrast on --bg: ink 17:1, ink-soft 9:1, accent 12:1, line 3.4:1 (non-text). */
+		/* Contrast on --bg: ink 17:1, ink-soft 9:1, accent 12:1. --rule is decorative only. */
 		--bg: #0e0e0c;
 		--surface: #181815;
 		--ink: #f3f1eb;
 		--ink-soft: #b5b1a6;
-		--line: #6b685f;
 		--rule: #34332e;
 		--accent: #ffc53d;
 		--measure: 680px;
@@ -88,8 +86,8 @@ const year = new Date().getFullYear();
 	}
 
 	html {
-		/* 18px root: every rem below is anchored to the 18px minimum. */
-		font-size: 18px;
+		/* 18px floor that still grows with a larger browser default. Every rem below inherits it. */
+		font-size: max(18px, 112.5%);
 		-webkit-text-size-adjust: 100%;
 	}
 
@@ -179,6 +177,36 @@ const year = new Date().getFullYear();
 	pre code {
 		padding: 0;
 		background: none;
+	}
+
+	/* Markdown elements log entries may use. */
+	blockquote {
+		margin: 1.5rem 0;
+		padding-left: 1rem;
+		border-left: 3px solid var(--accent);
+		color: var(--ink-soft);
+	}
+
+	hr {
+		margin: 2.5rem 0;
+		border: 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	table {
+		/* Wide tables scroll inside themselves, never the page. */
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		border-collapse: collapse;
+	}
+
+	th,
+	td {
+		padding: 0.4rem 0.75rem 0.4rem 0;
+		border-bottom: 1px solid var(--rule);
+		text-align: left;
+		vertical-align: top;
 	}
 
 	img,

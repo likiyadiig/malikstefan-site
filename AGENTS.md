@@ -29,7 +29,7 @@ Build: `npm run build`, output: `dist/`.
 
 ## Pages
 
-- `/` Home. One sentence on what I am doing and why, a week counter, links to the other pages, an email field.
+- `/` Home. One sentence on what I am doing and why, a week counter, links to the other pages.
 - `/about` About. What I can do today, what I cannot do yet, and why I am doing this.
-- `/building` What I am Building. Current ideas, which way I am leaning, and a decision date.
+- `/building` What I am Building. Current ideas, and which way I am leaning.
 - `/log` Log. Dated entries, newest first, including what broke.
