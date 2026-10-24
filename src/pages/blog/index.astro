@@ -1,0 +1,101 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const formatDate = (date: Date) =>
+	date.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		timeZone: 'UTC',
+	});
+---
+
+<Base
+	title="Blog"
+	description="Articles on editing multi-author and evaluation reports, and on using AI without losing Word tracked changes."
+>
+	<h1>Blog</h1>
+
+	<p class="lede">
+		Articles on editing reports written by several people, from building Report Harmonizer and watching my mom do this work.
+	</p>
+
+	{
+		posts.length === 0 ? (
+			<p>No articles yet.</p>
+		) : (
+			<ol class="posts">
+				{posts.map((post) => (
+					<li>
+						<article>
+							<h2><a href={`/blog/${post.id}`}>{post.data.title}</a></h2>
+							<p class="meta">
+								<time datetime={post.data.date.toISOString().slice(0, 10)}>
+									{formatDate(post.data.date)}
+								</time>
+							</p>
+							<p>{post.data.description}</p>
+						</article>
+					</li>
+				))}
+			</ol>
+		)
+	}
+</Base>
+
+<style>
+	.lede {
+		font-size: 1.25rem;
+		line-height: 1.45;
+		margin: 0 0 2rem;
+	}
+
+	.posts {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.posts > li {
+		padding: 1.5rem 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	.posts h2 {
+		margin: 0;
+		font-size: 1.25rem;
+	}
+
+	@media (max-width: 640px) {
+		.posts h2 {
+			font-size: 1.0625rem;
+		}
+	}
+
+	.posts h2 a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.posts h2 a:hover,
+	.posts h2 a:focus-visible {
+		color: var(--accent);
+		text-decoration: underline;
+	}
+
+	.meta {
+		margin: 0.25rem 0 0.75rem;
+		color: var(--ink-soft);
+		font-family: var(--sans);
+		font-size: 1rem;
+	}
+
+	.posts p:last-child {
+		margin-bottom: 0;
+	}
+</style>
