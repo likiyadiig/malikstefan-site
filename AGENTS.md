@@ -29,7 +29,7 @@ Build: `npm run build`, output: `dist/`.
 
 ## Pages
 
-- `/` Home. One sentence on what I am doing and why, a week counter, links to the other pages.
+- `/` Home. The Report Harmonizer marketing page: hero, the problem, how it works, pricing, questions, last call to action (`#early-access`). Words come from `copy.md`.
 - `/about` About. What I can do today, what I cannot do yet, and why I am doing this.
 - `/building` What I am Building. Current ideas, and which way I am leaning.
-- `/log` Log. Dated entries, newest first, including what broke.
+- `/log` Build log. Dated entries, newest first, including what broke.
