@@ -4,7 +4,11 @@ import { getCollection } from 'astro:content';
 // Static routes, plus any Markdown page that renders (log entries).
 const pages = import.meta.glob<{ url?: string }>('./**/*.{astro,md}', { eager: true });
 
+// Newsletter sign-up redirect targets: noindex, so not in the sitemap.
+const excluded = new Set(['./subscribed.astro', './confirmed.astro']);
+
 const staticPaths = Object.entries(pages)
+	.filter(([file]) => !excluded.has(file))
 	.filter(([file, mod]) => !file.includes('[') && (file.endsWith('.astro') || mod.url))
 	.map(([file]) =>
 		file
