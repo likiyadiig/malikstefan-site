@@ -1,60 +1,356 @@
 ---
+import { PUBLIC_NEWSLETTER_ENDPOINT } from 'astro:env/client';
 import Base from '../layouts/Base.astro';
 
-const START_DATE = new Date('2026-09-08T00:00:00Z');
-
-const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
-const week = Math.max(1, Math.floor((Date.now() - START_DATE.getTime()) / MS_PER_WEEK) + 1);
-
-const startedLabel = START_DATE.toLocaleDateString('en-US', {
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric',
-	timeZone: 'UTC',
-});
+const TERMS_URL = 'https://app.malikstefan.com/terms';
 ---
 
 <Base
-	title="Malik Machaieie"
-	description="Learning to build and ship AI software in 20 weeks, in public. Weekly notes on what worked and what didn't."
+	title="Report Harmonizer"
+	description="For evaluation consultants. Every edit comes back as a Word tracked change, with a comment wherever the meaning might shift."
 >
-	<h1>Malik Machaieie</h1>
-
-	<p class="lede">
-		Learning how to build and ship AI software.
-	</p>
-
-	<section aria-labelledby="week-heading">
-		<h2 id="week-heading">Where I am</h2>
-		<p>
-			Week <strong>{week}</strong>, counting from <time datetime={START_DATE.toISOString().slice(0, 10)}>{startedLabel}</time>.
+	<section class="hero" aria-labelledby="hero-heading">
+		<h1 id="hero-heading">Make a report written by several people sound like one.</h1>
+		<p class="lede">
+			For evaluation consultants. Every edit comes back as a Word tracked change, with a comment wherever the meaning might shift.
 		</p>
-		<p>
-			Twenty weeks total. The goal is a paying customer by the end.
+		<p class="actions">
+			<a class="button" href="#early-access">Get early access</a>
+			<a class="secondary" href="https://app.malikstefan.com/#example">See a before and after example</a>
 		</p>
+		<img
+			class="shot"
+			src="/img/hero-tracked-changes.png"
+			width="1433"
+			height="271"
+			fetchpriority="high"
+			alt="A report paragraph in Word with tracked changes: deleted words struck through in red, replacements underlined, and a Report Harmonizer comment beside it reading 'Please check whether this edit changes the meaning. Split and simplify.'"
+		/>
 	</section>
 
-	<section aria-labelledby="elsewhere-heading">
-		<h2 id="elsewhere-heading">Elsewhere on this site</h2>
-		<ul>
-			<li><a href="/about">About</a> — Who am I?</li>
-			<li><a href="/building">What I am Building</a> — What I've built, and future ideas.</li>
-			<li><a href="/log">Log</a> — Track my progress!</li>
-		</ul>
+	<section aria-labelledby="problem-heading">
+		<h2 id="problem-heading">The problem</h2>
+		<figure class="quotes">
+			<blockquote>
+				<p>"Tone is always differing when multiple people write, also the style they write in."</p>
+			</blockquote>
+			<blockquote>
+				<p>"Length is always an issue, as many people are not good at writing succinctly."</p>
+			</blockquote>
+			<blockquote>
+				<p>"For me to fix it after it has been to the people writing pieces, it can take 3 to 5 days."</p>
+			</blockquote>
+			<figcaption>An evaluation consultant who edits team reports</figcaption>
+		</figure>
 	</section>
 
+	<section aria-labelledby="how-heading">
+		<h2 id="how-heading">How it works</h2>
+		<ol class="steps">
+			<li>
+				<h3>Set your style rules.</h3>
+				<p>Write down how your reports should sound, or start from the default rules.</p>
+				<img
+					class="shot"
+					src="/img/step-1-style-rules.png"
+					width="660"
+					height="580"
+					loading="lazy"
+					decoding="async"
+					alt="The Style rules page: a text box of rules such as 'Use short, plain sentences, but don't make the text choppy' and 'If a sentence is already fine, leave it unchanged', with a Save button."
+				/>
+			</li>
+			<li>
+				<h3>Upload your report.</h3>
+				<p>Drop in the Word file written by your team.</p>
+				<img
+					class="shot"
+					src="/img/step-2-upload.png"
+					width="660"
+					height="440"
+					loading="lazy"
+					decoding="async"
+					alt="The Upload a report box: a dashed drop zone saying 'Drop your report here, or click to choose a file', for Word reports (.docx) up to 25 MB, with an Upload button."
+				/>
+			</li>
+			<li>
+				<h3>Review the changes in Word.</h3>
+				<p>
+					You get the same file back with every edit as a tracked change, and a comment wherever the meaning might shift. Accept or reject each one.
+				</p>
+				<img
+					class="shot"
+					src="/img/step-3-comment.png"
+					width="752"
+					height="267"
+					loading="lazy"
+					decoding="async"
+					alt="A Word comment from Report Harmonizer: 'Please check whether this edit changes the meaning. Split and simplify.'"
+				/>
+			</li>
+		</ol>
+	</section>
+
+	<section aria-labelledby="pricing-heading">
+		<h2 id="pricing-heading">Pricing</h2>
+		<article class="card" aria-labelledby="plan-heading">
+			<h3 id="plan-heading">Report Harmonizer</h3>
+			<p class="price">15 euros per month</p>
+			<ul>
+				<li>Turn multi-author Word reports into one voice</li>
+				<li>Every change returned as a Word tracked change</li>
+				<li>Comments where an edit might change the meaning</li>
+				<li>Cancel any time</li>
+				<li><a href={TERMS_URL}>Full refund within 14 days of a charge</a></li>
+			</ul>
+			<p>Sign-up is by invitation for now. Join the email list to get access when it opens.</p>
+			<p class="actions">
+				<a class="button" href="#early-access">Get early access</a>
+			</p>
+		</article>
+	</section>
+
+	<section aria-labelledby="questions-heading">
+		<h2 id="questions-heading">Questions</h2>
+		<div class="faq">
+			<details>
+				<summary>Will it change what my report says?</summary>
+				<p>
+					It tries not to. Every edit is a tracked change you can accept or reject, and edits that might change the meaning, like a changed number or a removed "may", get a comment so you check them first.
+				</p>
+			</details>
+			<details>
+				<summary>Which files can I upload?</summary>
+				<p>Word files (.docx), up to 25 MB.</p>
+			</details>
+			<details>
+				<summary>Can I use my own style rules?</summary>
+				<p>Yes. Write them in your own words on the Style rules page, or start from the default rules.</p>
+			</details>
+			<details>
+				<summary>Where is my report stored, and who sees it?</summary>
+				<p>
+					On my server in New York, USA. The text is sent to Anthropic's Claude API to make the edits. Files are kept until you ask me to delete them. Details are on the <a href="/privacy">privacy page</a>.
+				</p>
+			</details>
+			<details>
+				<summary>How do I cancel?</summary>
+				<p>Click Manage subscription on the billing page. You keep access until the end of the month you paid for.</p>
+			</details>
+		</div>
+	</section>
+
+	<section id="early-access" class="cta" aria-labelledby="cta-heading">
+		<h2 id="cta-heading">Want to try it on your next report?</h2>
+		<p>Sign-up is by invitation for now. Join the email list and I'll let you know when it opens.</p>
+		<form class="signup" method="post" action={PUBLIC_NEWSLETTER_ENDPOINT}>
+			<label for="ea-email">Email address</label>
+			<div class="field">
+				<input
+					id="ea-email"
+					name="email"
+					type="email"
+					required
+					autocomplete="email"
+					aria-describedby="ea-note"
+				/>
+				<button type="submit" class="button">Get early access</button>
+			</div>
+			<p id="ea-note" class="note">
+				Occasional emails about Report Harmonizer, a few a month. You will get one email asking you to confirm. Unsubscribe any time. See the <a href="/privacy">privacy policy</a>.
+			</p>
+		</form>
+	</section>
 </Base>
 
 <style>
+	.hero h1 {
+		margin-bottom: 1rem;
+	}
+
 	.lede {
 		font-size: 1.25rem;
 		line-height: 1.45;
+		margin: 0 0 1.5rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1.5rem;
 		margin: 0 0 2rem;
 	}
 
-	#week-heading + p strong {
-		color: var(--accent);
-		font-variant-numeric: tabular-nums;
+	.button {
+		/* At least a 44px tap target. */
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0.5rem 1.25rem;
+		border-radius: 4px;
+		background: var(--accent);
+		color: var(--bg);
+		font-family: var(--sans);
+		font-weight: 600;
+		text-decoration: none;
 	}
 
+	.button:hover {
+		filter: brightness(1.08);
+	}
+
+	.secondary {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		font-family: var(--sans);
+	}
+
+	.shot {
+		display: block;
+		width: 100%;
+		border: 1px solid var(--rule);
+		border-radius: 4px;
+	}
+
+	.quotes {
+		margin: 1rem 0 0;
+	}
+
+	.quotes blockquote {
+		margin: 0 0 1rem;
+	}
+
+	.quotes blockquote p {
+		margin: 0;
+	}
+
+	.quotes figcaption {
+		color: var(--ink-soft);
+		font-family: var(--sans);
+	}
+
+	.quotes figcaption::before {
+		content: '\2014\00a0';
+	}
+
+	.steps {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		counter-reset: step;
+	}
+
+	.steps li {
+		counter-increment: step;
+		margin-top: 2rem;
+	}
+
+	.steps h3 {
+		margin-top: 0;
+	}
+
+	.steps h3::before {
+		content: counter(step) '. ';
+		color: var(--accent);
+	}
+
+	.steps p {
+		margin: 0 0 1rem;
+	}
+
+	.card {
+		margin-top: 1rem;
+		padding: 1.25rem;
+		border: 1px solid var(--rule);
+		border-radius: 6px;
+		background: var(--surface);
+	}
+
+	.card h3 {
+		margin-top: 0;
+	}
+
+	.price {
+		margin: 0 0 1rem;
+		color: var(--accent);
+		font-size: 1.25rem;
+		font-weight: 600;
+	}
+
+	.card .actions {
+		margin: 1.25rem 0 0;
+	}
+
+	.faq {
+		margin-top: 1rem;
+		border-top: 1px solid var(--rule);
+	}
+
+	details {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	summary {
+		/* 44px tap target. */
+		padding: 0.6rem 0;
+		cursor: pointer;
+		color: var(--ink);
+		font-weight: 600;
+	}
+
+	details p {
+		margin: 0 0 1rem;
+	}
+
+	.cta p {
+		margin-bottom: 0;
+	}
+
+	.signup {
+		margin-top: 1.5rem;
+	}
+
+	.signup label {
+		display: block;
+		margin-bottom: 0.4rem;
+		font-family: var(--sans);
+		font-weight: 600;
+	}
+
+	.field {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.signup input {
+		flex: 1 1 16rem;
+		min-height: 44px;
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--ink-soft);
+		border-radius: 4px;
+		background: var(--surface);
+		color: var(--ink);
+		font: inherit;
+		font-size: 1.125rem;
+	}
+
+	.signup input:focus-visible,
+	.signup .button:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.signup .button {
+		border: 0;
+		font-size: 1.125rem;
+		cursor: pointer;
+	}
+
+	.signup .note {
+		margin-top: 0.75rem;
+		color: var(--ink-soft);
+	}
 </style>
