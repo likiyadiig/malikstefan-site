@@ -1,4 +1,6 @@
 ---
+import { PUBLIC_GA_ID } from 'astro:env/client';
+
 interface Props {
 	title: string;
 	description: string;
@@ -42,6 +44,18 @@ const year = new Date().getFullYear();
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
 
+		<!-- Hidden until the script below finds no stored choice. In normal flow so it never covers content. -->
+		<section id="consent" class="consent" aria-label="Cookie choice" tabindex="-1" hidden>
+			<p>
+				I use Google Analytics to see which pages bring visitors, only if you accept.
+				See the <a href="/privacy">privacy policy</a>.
+			</p>
+			<div class="consent-actions">
+				<button type="button" class="consent-button" data-consent="granted">Accept</button>
+				<button type="button" class="consent-button" data-consent="denied">Decline</button>
+			</div>
+		</section>
+
 		<header>
 			<nav aria-label="Primary">
 				<ul>
@@ -77,6 +91,9 @@ const year = new Date().getFullYear();
 						</li>
 					))
 				}
+				<li id="cookie-settings-item" hidden>
+					<button type="button" id="cookie-settings" class="link-button">Cookie settings</button>
+				</li>
 			</ul>
 			<ul class="contact">
 				<li>
@@ -108,6 +125,85 @@ const year = new Date().getFullYear();
 				</li>
 			</ul>
 		</footer>
+
+		<script is:inline define:vars={{ gaId: PUBLIC_GA_ID }}>
+			// Consent-first GA4. No Google script or cookies unless the visitor clicks Accept.
+			var KEY = 'analytics-consent';
+			var banner = document.getElementById('consent');
+			var loaded = false;
+			// In memory too, so Accept still counts on this page if storage is blocked.
+			var consented = false;
+
+			function getChoice() {
+				try { return localStorage.getItem(KEY); } catch (e) { return null; }
+			}
+			function setChoice(v) {
+				try { localStorage.setItem(KEY, v); } catch (e) {}
+			}
+			function clearChoice() {
+				try { localStorage.removeItem(KEY); } catch (e) {}
+			}
+
+			function loadGA() {
+				consented = true;
+				window['ga-disable-' + gaId] = false;
+				if (loaded) return;
+				loaded = true;
+				window.dataLayer = window.dataLayer || [];
+				window.gtag = function () { dataLayer.push(arguments); };
+				gtag('js', new Date());
+				gtag('config', gaId);
+				var s = document.createElement('script');
+				s.async = true;
+				s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaId);
+				document.head.appendChild(s);
+			}
+
+			function deleteGACookies() {
+				var host = location.hostname;
+				var domains = ['', host, '.' + host, '.' + host.split('.').slice(-2).join('.')];
+				document.cookie.split(';').forEach(function (c) {
+					var name = c.split('=')[0].trim();
+					if (name === '_ga' || name.indexOf('_ga_') === 0) {
+						domains.forEach(function (d) {
+							document.cookie = name + '=; Max-Age=0; path=/' + (d ? '; domain=' + d : '');
+						});
+					}
+				});
+			}
+
+			banner.addEventListener('click', function (e) {
+				var choice = e.target.getAttribute && e.target.getAttribute('data-consent');
+				if (!choice) return;
+				setChoice(choice);
+				banner.hidden = true;
+				if (choice === 'granted') loadGA();
+			});
+
+			document.getElementById('cookie-settings-item').hidden = false;
+			document.getElementById('cookie-settings').addEventListener('click', function () {
+				clearChoice();
+				consented = false;
+				if (loaded) window['ga-disable-' + gaId] = true;
+				deleteGACookies();
+				banner.hidden = false;
+				banner.scrollIntoView();
+				banner.focus();
+			});
+
+			var form = document.querySelector('#early-access form');
+			if (form) {
+				form.addEventListener('submit', function () {
+					if (consented) {
+						gtag('event', 'sign_up', { transport_type: 'beacon' });
+					}
+				});
+			}
+
+			var choice = getChoice();
+			if (choice === 'granted') loadGA();
+			else if (choice !== 'denied') banner.hidden = false;
+		</script>
 	</body>
 </html>
 
@@ -417,5 +513,68 @@ const year = new Date().getFullYear();
 		width: 1em;
 		height: 1em;
 		flex-shrink: 0;
+	}
+
+	/* Cookie banner: in normal flow above the header, so it never overlays the page. */
+	.consent {
+		max-width: var(--measure);
+		margin: 1rem auto 0;
+		padding: 1rem 1.25rem;
+		border: 1px solid var(--rule);
+		border-radius: 4px;
+		background: var(--surface);
+		font-family: var(--sans);
+	}
+
+	.consent[hidden] {
+		display: none;
+	}
+
+	.consent p {
+		margin: 0 0 0.75rem;
+	}
+
+	.consent-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	/* Accept and Decline look identical: same size, same weight, neither pre-selected. */
+	.consent-button {
+		flex: 1 1 8rem;
+		min-height: 44px;
+		padding: 0.5rem 1rem;
+		border: 1px solid var(--ink-soft);
+		border-radius: 4px;
+		background: transparent;
+		color: var(--ink);
+		font: inherit;
+		font-size: 1rem;
+		cursor: pointer;
+	}
+
+	.consent-button:hover {
+		border-color: var(--ink);
+		background: var(--bg);
+	}
+
+	/* Footer "Cookie settings" is an action, styled like the footer links beside it. */
+	.link-button {
+		display: inline-block;
+		padding: 0.4rem 0;
+		border: 0;
+		background: none;
+		color: var(--accent);
+		font: inherit;
+		font-size: 1rem;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		cursor: pointer;
+	}
+
+	.link-button:hover {
+		text-decoration-thickness: 2px;
 	}
 </style>
