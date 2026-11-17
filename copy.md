@@ -8,7 +8,7 @@ Headline: Make a report written by several people sound like one.
 
 Subhead: For evaluation consultants. Every edit comes back as a Word tracked change, with a comment wherever the meaning might shift.
 
-Primary button: Get early access (scrolls to / opens the email form; the form itself is added in a later step)
+Primary button: Try it (links to https://app.malikstefan.com)
 
 Secondary link: See a before and after example (links to https://app.malikstefan.com/#example)
 
@@ -55,9 +55,7 @@ Report Harmonizer
 - Cancel any time
 - Full refund within 14 days of a charge (link "refund policy" to https://app.malikstefan.com/terms)
 
-Sign-up is by invitation for now. Join the email list to get access when it opens.
-
-Button: Get early access
+Button: Try it (links to https://app.malikstefan.com)
 
 ## 5. Questions
 
@@ -80,11 +78,11 @@ A: Click Manage subscription on the billing page. You keep access until the end 
 
 ## 6. Last call to action
 
-Heading: Want to try it on your next report?
+Heading: Not ready to try it yet?
 
-Text: Sign-up is by invitation for now. Join the email list and I'll let you know when it opens.
+Text: Get an occasional email when something new ships.
 
-Button: Get early access
+Button: Keep me posted
 
 ## 7. Footer (every page)
 
